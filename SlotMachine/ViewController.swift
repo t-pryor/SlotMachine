@@ -259,52 +259,5 @@ class ViewController: UIViewController {
       view.removeFromSuperview()
     }
   }
-  
-  //ORIGINAL, WORKS but why do we need optionals?
-  /*
-    
-    let container: UIView = self.secondContainer
-    let subViews: Array = container.subviews
-    
-    if self.secondContainer != nil {
-      let container: UIView? = self.secondContainer!
-      let subViews: Array? = container!.subviews
-      for view in subViews! {
-        view.removeFromSuperview()
-      }
-    }
-   */
-
-    //Modified, but still don't need optionals (see AndreL comments)
-    /*
-    let container: UIView = self.secondContainer
-    let subViews: Array = container.subviews
-    
-    let container: UIView? = self.secondContainer
-    let subViews: Array? = container?.subviews
-    
-    if let sv = subViews {
-      println("lets clean out old views")
-      for view in sv {
-        view.removeFromSuperview()
-      }
-    } else {
-      println("NO VIEWS YET")
-    }
-
-    */
-    
-    
-    //THIS WORKS-No optionals comment by devanish
-    /*
-    let container: UIView = self.secondContainer
-    let subViews: Array = container.subviews
-    for view in subViews {
-      view.removeFromSuperview()
-    }
-    */
-    
-    
-  
 }
 
