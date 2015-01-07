@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SlotMachine/ViewController.swift"
-            timestampString = "441475243.026518"
+            timestampString = "442279851.60215"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
             landmarkName = "setupContainerViews()"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,25 +26,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SlotMachine/ViewController.swift"
-            timestampString = "441703872.099226"
+            timestampString = "442279851.60215"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "310"
-            endingLineNumber = "310">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SlotMachine/ViewController.swift"
-            timestampString = "441703872.099226"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "310"
-            endingLineNumber = "310">
+            startingLineNumber = "268"
+            endingLineNumber = "268"
+            landmarkName = "setupFourthContainer(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -35,13 +35,8 @@ class ViewController: UIViewController {
   var betTitleLabel: UILabel!
   var winnerPaidTitleLabel: UILabel!
   
-  let kMarginForView: CGFloat = 10.0 //k for constant
-  let kMarginForSlot: CGFloat = 2.0
   
-  let kSixth: CGFloat = 1.0/6.0
-  let kThird: CGFloat = 1.0/3.0
-  let kHalf: CGFloat = 1.0/2.0
-  let kEighth: CGFloat = 1.0/8.0
+  
   
   // buttons in fourth container
   var resetButton: UIButton!
@@ -51,19 +46,36 @@ class ViewController: UIViewController {
   
   var slots: [[Slot]] = []
   
+  //Stats
+  var credits = 0
+  var currentBet = 0
+  var winnings = 0
+  
+  //Constants
+  let kSixth: CGFloat = 1.0/6.0
+  let kThird: CGFloat = 1.0/3.0
+  let kHalf: CGFloat = 1.0/2.0
+  let kEighth: CGFloat = 1.0/8.0
+  
+  let kMarginForView: CGFloat = 10.0
+  let kMarginForSlot: CGFloat = 2.0
   
   let kNumberOfContainers = 3
   let kNumberOfSlots = 3
 
+  
+  
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
     setupContainerViews()
     setupFirstContainer(self.firstContainer)
-    setupSecondContainer(self.secondContainer)
+    //setupSecondContainer(self.secondContainer)
     setupThirdContainer(self.thirdContainer)
     setupFourthContainer(self.fourthContainer)
     
+    hardReset()
   
   }
 
@@ -75,21 +87,54 @@ class ViewController: UIViewController {
   //IBActions
   
   func resetButtonPressed(button: UIButton) {
-    println("resetButtonPressed")
+    hardReset()
   }
   
   func betOneButtonPressed(button: UIButton) {
-    println(button)
+    if self.credits <= 0 && self.currentBet == 0 {
+      showAlertWithText(header: "No More Credits", message: "Reset Game")
+    } else if self.credits == 0 {
+      showAlertWithText(header: "No More Credits", message: "You have reached your max bet amount")
+    } else {
+      if self.currentBet < 5 {
+        self.currentBet += 1
+        self.credits -= 1
+        updateMainView()
+      } else {
+        showAlertWithText(message: "You can only bet 5 credits at a time!")
+      }
+    }
+    
   }
   
   func betMaxButtonPressed(button: UIButton) {
-    println("betMaxButtonPressed")
+    
+    
+    
+    if credits <= 5 {
+      showAlertWithText(header: "Not Enough Credits", message: "Bet Less")
+    } else {
+      if currentBet < 5 {
+        var creditsToBetMax = 5 - currentBet
+        credits -= creditsToBetMax
+        currentBet += creditsToBetMax
+        updateMainView()
+      } else {
+        showAlertWithText(message: "You can only bet 5 credits at a time!")
+      }
+    }
   }
   
   func spinButtonPressed(button: UIButton) {
     self.removeSlotImageViews()
     self.slots = Factory.createSlots() //replaces old array of slots
     setupSecondContainer(self.secondContainer)
+    
+    var winningsMultiplier = SlotBrain.computeWinnings(self.slots)
+    winnings = winningsMultiplier * currentBet
+    credits += winnings
+    currentBet = 0
+    updateMainView()
   }
   
   func setupContainerViews() {
@@ -111,6 +156,7 @@ class ViewController: UIViewController {
     
     self.fourthContainer.backgroundColor = UIColor.blackColor()
     self.view.addSubview(self.fourthContainer)
+    
     
   }
   
@@ -259,5 +305,30 @@ class ViewController: UIViewController {
       view.removeFromSuperview()
     }
   }
+  
+  func hardReset() {
+    removeSlotImageViews()
+    self.slots.removeAll(keepCapacity: true)
+    self.setupSecondContainer(self.secondContainer)
+    self.credits = 50
+    self.winnings = 0
+    self.currentBet = 0
+    
+    updateMainView()
+  }
+  
+  func updateMainView() {
+    self.creditsLabel.text = "\(self.credits)"
+    self.betLabel.text = "\(self.currentBet)"
+    self.winnerPaidLabel.text = "\(self.winnings)"
+    
+  }
+  
+  func showAlertWithText(header: String = "Warning", message: String) {
+    var alert = UIAlertController(title: header, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+    self.presentViewController(alert, animated: true, completion: nil)
+  }
+  
 }
 
